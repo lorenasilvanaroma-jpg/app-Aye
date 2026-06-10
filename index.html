@@ -20,6 +20,7 @@
 <body class="bg-neutral-950 text-zinc-100 min-h-screen flex flex-col justify-center items-center py-6 px-4 font-sans">
 
     <div class="relative w-[380px] h-[820px] bg-black rounded-[48px] border-[8px] border-zinc-800 overflow-hidden flex flex-col">
+        <!-- BARRA DE HORA SUPERIOR -->
         <div class="h-10 bg-darkBg px-6 pt-3 flex justify-between items-center z-40">
             <span class="text-xs text-zinc-300">22:38</span>
         </div>
@@ -44,28 +45,156 @@
             <!-- PANEL CLIENTE -->
             <div id="screen-client-home" class="app-screen hidden p-6 space-y-6">
                 <h3 class="text-xl font-bold">Reserva tu hueco</h3>
+                
+                <!-- Bloque de catálogo visible para el cliente -->
+                <div class="bg-panelBg p-4 rounded-xl border border-borderGray space-y-3">
+                    <p class="text-zinc-400 text-sm">¿Quieres ver los últimos diseños disponibles antes de reservar?</p>
+                    <button onclick="switchScreen('screen-gallery')" class="w-full bg-zinc-800 text-white py-2.5 rounded-lg font-medium hover:bg-zinc-700 transition text-xs flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-images text-blue-400"></i> Ver Catálogo de Diseños
+                    </button>
+                </div>
+
+                <!-- Bloque de reserva con Calendly -->
                 <div class="bg-panelBg p-4 rounded-xl border border-borderGray">
                     <p class="text-zinc-400 text-sm mb-4">Selecciona fecha y realiza el pago de la señal para confirmar.</p>
-                    <button class="w-full bg-emerald-600 text-white py-3 rounded-lg font-bold hover:bg-emerald-700 transition">Pagar Señal (Stripe)</button>
+                    <a href="https://calendly.com/lorena7750" target="_blank" class="block w-full bg-emerald-600 text-white py-3 rounded-lg font-bold hover:bg-emerald-700 transition text-center">Reservar Tatuaje</a>
                 </div>
-            </div>
 
-            <!-- PANEL AYELÉN -->
-            <div id="screen-admin-dashboard" class="app-screen hidden p-6 space-y-6">
-                <h3 class="text-xl font-bold">Panel de Control</h3>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-panelBg p-4 rounded-xl border border-borderGray text-center">
-                        <i class="fa-solid fa-users text-zinc-500 mb-2"></i>
-                        <p class="text-xs">Gestionar Citas</p>
+                <!-- Bloque de Contacto y Redes Sociales -->
+                <div class="bg-panelBg p-4 rounded-xl border border-borderGray space-y-3">
+                    <p class="text-zinc-400 text-sm">¿Tienes dudas con tu diseño? Contacta directamente:</p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <!-- Botón WhatsApp con el número real -->
+                        <a href="https://wa.me/34622123581?text=Hola%20Ayelén,%20quiero%20consultarte%20sobre%20un%20tatuaje" target="_blank" class="bg-zinc-900 border border-borderGray py-2.5 rounded-lg text-xs font-semibold hover:border-green-500 transition flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-green-500 text-sm"></i> WhatsApp
+                        </a>
+                        <!-- Botón Instagram -->
+                        <a href="https://www.instagram.com/marotoart_tattoo/" target="_blank" class="bg-zinc-900 border border-borderGray py-2.5 rounded-lg text-xs font-semibold hover:border-pink-500 transition flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-instagram text-pink-500 text-sm"></i> Instagram
+                        </a>
                     </div>
                 </div>
             </div>
+
+            <!-- PANEL AYELÉN (ADMIN) -->
+            <div id="screen-admin-dashboard" class="app-screen hidden p-6 space-y-6">
+                <h3 class="text-xl font-bold">Panel de Control</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- Botón Ver Citas -->
+                    <a href="https://calendly.com/event_types/user/me" target="_blank" class="bg-panelBg p-4 rounded-xl border border-borderGray text-center hover:border-emerald-600 transition block">
+                        <i class="fa-solid fa-calendar-check text-emerald-500 mb-2 text-lg"></i>
+                        <p class="text-xs font-semibold">Ver Citas</p>
+                    </a>
+                    <!-- Botón Ver Catálogo -->
+                    <button onclick="switchScreen('screen-gallery')" class="bg-panelBg p-4 rounded-xl border border-borderGray text-center hover:border-blue-500 transition block w-full">
+                        <i class="fa-solid fa-paintbrush text-blue-500 mb-2 text-lg"></i>
+                        <p class="text-xs font-semibold">Ver Catálogo</p>
+                    </button>
+                </div>
+                <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800">
+                    <p class="text-xs text-zinc-400">Desde aquí puedes revisar tu agenda de reservas de Calendly y comprobar cómo ven los clientes tu catálogo.</p>
+                </div>
+            </div>
+
+            <!-- GALERÍA PÚBLICA DE DISEÑOS (20 FOTOS) -->
+            <div id="screen-gallery" class="app-screen hidden p-6 space-y-6">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold">Catálogo de Diseños</h3>
+                    <button onclick="switchScreen('screen-welcome')" class="text-xs text-zinc-400 hover:text-white bg-panelBg px-3 py-1.5 rounded-lg border border-borderGray">Inicio</button>
+                </div>
+                
+                <p class="text-zinc-400 text-xs">Echa un vistazo a las creaciones disponibles. Cuando encuentres el tuyo, vuelve a la sección de reserva.</p>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje1.png" alt="Tatuaje 1" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">1</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje2.png" alt="Tatuaje 2" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">2</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje3.png" alt="Tatuaje 3" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">3</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje4.png" alt="Tatuaje 4" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">4</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje5.png" alt="Tatuaje 5" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">5</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje6.png" alt="Tatuaje 6" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">6</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje7.png" alt="Tatuaje 7" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">7</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje8.png" alt="Tatuaje 8" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">8</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje9.png" alt="Tatuaje 9" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">9</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje10.png" alt="Tatuaje 10" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">10</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje11.png" alt="Tatuaje 11" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">11</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje12.png" alt="Tatuaje 12" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">12</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje13.png" alt="Tatuaje 13" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">13</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje14.png" alt="Tatuaje 14" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">14</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje15.png" alt="Tatuaje 15" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">15</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje16.png" alt="Tatuaje 16" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">16</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje17.png" alt="Tatuaje 17" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">17</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje18.png" alt="Tatuaje 18" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">18</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje19.png" alt="Tatuaje 19" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">19</span>
+                    </div>
+                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
+                        <img src="tatuaje20.png" alt="Tatuaje 20" class="w-full h-full object-cover onerror-replace">
+                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">20</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <!-- NAV -->
+        <!-- MENÚ DE NAVEGACIÓN INFERIOR (GLOBAL) -->
         <div class="bg-panelBg border-t border-borderGray py-3 flex justify-around">
             <button onclick="switchScreen('screen-client-home')" class="text-zinc-500 hover:text-white"><i class="fa-solid fa-calendar"></i></button>
-            <button onclick="switchScreen('screen-welcome')" class="w-10 h-10 rounded-full bg-zinc-900 -mt-5 border border-zinc-700 text-white flex items-center justify-center"><i class="fa-solid fa-anchor"></i></button>
+            <button onclick="switchScreen('screen-gallery')" class="w-10 h-10 rounded-full bg-zinc-900 -mt-5 border border-zinc-700 text-white flex items-center justify-center hover:bg-zinc-800 transition"><i class="fa-solid fa-images"></i></button>
             <button onclick="switchScreen('screen-admin-dashboard')" class="text-zinc-500 hover:text-white"><i class="fa-solid fa-sliders"></i></button>
         </div>
     </div>
@@ -75,6 +204,16 @@
             document.querySelectorAll('.app-screen').forEach(s => s.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
         }
+
+        document.querySelectorAll('.onerror-replace').forEach(img => {
+            img.onerror = function() {
+                this.style.display = 'none';
+                const p = document.createElement('p');
+                p.className = 'text-[10px] text-zinc-500 text-center p-2';
+                p.innerText = 'Foto ' + this.getAttribute('alt').replace('Tatuaje ', '');
+                this.parentNode.appendChild(p);
+            };
+        });
     </script>
 </body>
 </html>
