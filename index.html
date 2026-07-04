@@ -7,49 +7,16 @@
     
     <!-- Configuración PWA e Iconos para móviles -->
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Marotoart">
+    <meta name="apple-web-app-capable" content="yes">
+    <meta name="apple-web-app-status-bar-style" content="black">
+    <meta name="apple-web-app-title" content="Marotoart">
+    
+    <!-- Enlace al archivo de configuración física (Perfecto para Brave) -->
+    <link rel="manifest" href="manifest.json">
     
     <!-- Enlaces directos de iconos fallback -->
     <link rel="icon" type="image/png" href="logo.png">
-    <link rel="apple-touch-icon" href="logo.png">
-    
-    <script>
-        // Este script detecta la URL real en producción y le da a Android la ruta absoluta de logo.png
-        (function() {
-            const baseUrl = window.location.href.split('#')[0].split('?')[0];
-            const baseDir = baseUrl.substring(0, baseUrl.lastIndexOf('/') + 1);
-            const absoluteLogoUrl = baseDir + 'logo.png';
-
-            const manifestData = {
-                "name": "Marotoart Tattoo",
-                "short_name": "Marotoart",
-                "start_url": baseUrl,
-                "display": "standalone",
-                "background_color": "#0A0A0C",
-                "theme_color": "#0A0A0C",
-                "icons": [
-                    {
-                        "src": absoluteLogoUrl,
-                        "sizes": "192x192",
-                        "type": "image/png"
-                    },
-                    {
-                        "src": absoluteLogoUrl,
-                        "sizes": "512x512",
-                        "type": "image/png"
-                    }
-                ]
-            };
-
-            const manifestUri = 'data:application/manifest+json,' + encodeURIComponent(JSON.stringify(manifestData));
-            const link = document.createElement('link');
-            link.rel = 'manifest';
-            link.href = manifestUri;
-            document.head.appendChild(link);
-        })();
-    </script>
+    <link class="apple-touch-icon" rel="apple-touch-icon" href="logo.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -72,9 +39,7 @@
             <div id="screen-welcome" class="app-screen flex-1 flex flex-col justify-center p-6 space-y-8">
                 <!-- Contenedor del Logo con alternativa si falla -->
                 <div class="w-36 h-36 mx-auto rounded-full border-4 border-zinc-800 bg-zinc-900 flex items-center justify-center overflow-hidden shadow-2xl relative">
-                    <!-- Logo real -->
                     <img id="app-logo" src="logo.png" alt="Marotoart Logo" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; document.getElementById('logo-placeholder').classList.remove('hidden');">
-                    <!-- Icono de repuesto elegante (solo se ve si falla la carga) -->
                     <div id="logo-placeholder" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-zinc-900">
                         <i class="fa-solid fa-circle-user text-6xl text-zinc-700"></i>
                     </div>
@@ -104,7 +69,7 @@
                 <!-- Bloque de reserva con Calendly -->
                 <div class="bg-panelBg p-4 rounded-xl border border-borderGray">
                     <p class="text-zinc-400 text-sm mb-4">Selecciona fecha y realiza el pago de la señal para confirmar.</p>
-                    <a href="https://calendly.com/lorena7750" target="_blank" class="block w-full bg-emerald-600 text-white py-3 rounded-lg font-bold hover:bg-emerald-700 transition text-center">Reservar Tatuaje</a>
+                    <a href="https://calendly.com/lorena7750" target="_blank" class="block w-full bg-emerald-600 text-white py-3 rounded-lg font-bold hover:bg-emerald-700 transition text-center text-sm">Reservar Tatuaje</a>
                 </div>
 
                 <!-- Bloque de Contacto y Redes Sociales -->
