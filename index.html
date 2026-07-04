@@ -4,11 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marotoart Tattoo</title>
-    <!-- Configuración PWA -->
+    
+    <!-- Configuración PWA e Iconos -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Marotoart">
+    
+    <!-- Enlaces directos para que el móvil reconozca tu logo.png como icono -->
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    
+    <!-- Manifiesto integrado para que Android reconozca el icono de forma nativa al instalar -->
+    <link rel="manifest" href='data:application/manifest+json,{"name":"Marotoart Tattoo","short_name":"Marotoart","start_url":".","display":"standalone","background_color":"#0A0A0C","theme_color":"#0A0A0C","icons":[{"src":"logo.png","sizes":"192x192","type":"image/png"},{"src":"logo.png","sizes":"512x512","type":"image/png"}]}'>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -29,8 +37,14 @@
             
             <!-- BIENVENIDA -->
             <div id="screen-welcome" class="app-screen flex-1 flex flex-col justify-center p-6 space-y-8">
-                <div class="w-36 h-36 mx-auto rounded-full border-4 border-zinc-800 bg-zinc-900 flex items-center justify-center overflow-hidden shadow-2xl">
-                    <img src="logo.png" alt="Marotoart Logo" class="w-full h-full object-cover">
+                <!-- Contenedor del Logo con alternativa si falla -->
+                <div class="w-36 h-36 mx-auto rounded-full border-4 border-zinc-800 bg-zinc-900 flex items-center justify-center overflow-hidden shadow-2xl relative">
+                    <!-- Logo real -->
+                    <img id="app-logo" src="logo.png" alt="Marotoart Logo" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; document.getElementById('logo-placeholder').classList.remove('hidden');">
+                    <!-- Icono de repuesto elegante (solo se ve si falla la carga) -->
+                    <div id="logo-placeholder" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-zinc-900">
+                        <i class="fa-solid fa-circle-user text-6xl text-zinc-700"></i>
+                    </div>
                 </div>
                 <div class="text-center space-y-1">
                     <h2 class="text-2xl font-bold text-white lowercase">marotoart_tattoo</h2>
@@ -64,11 +78,9 @@
                 <div class="bg-panelBg p-4 rounded-xl border border-borderGray space-y-3">
                     <p class="text-zinc-400 text-sm">¿Tienes dudas con tu diseño? Contacta directamente:</p>
                     <div class="grid grid-cols-2 gap-3">
-                        <!-- Botón WhatsApp que ahora abre el MENÚ INTERACTIVO interno en vez del enlace directo -->
                         <button onclick="switchScreen('screen-contact-menu')" class="bg-zinc-900 border border-borderGray py-2.5 rounded-lg text-xs font-semibold hover:border-green-500 transition flex items-center justify-center gap-2 w-full">
                             <i class="fa-brands fa-whatsapp text-green-500 text-sm"></i> WhatsApp
                         </button>
-                        <!-- Botón Instagram -->
                         <a href="https://www.instagram.com/marotoart_tattoo/" target="_blank" class="bg-zinc-900 border border-borderGray py-2.5 rounded-lg text-xs font-semibold hover:border-pink-500 transition flex items-center justify-center gap-2">
                             <i class="fa-brands fa-instagram text-pink-500 text-sm"></i> Instagram
                         </a>
@@ -76,7 +88,7 @@
                 </div>
             </div>
 
-            <!-- NUEVA PANTALLA: MENÚ INTERACTIVO DE CONSULTAS -->
+            <!-- PANTALLA: MENÚ INTERACTIVO DE CONSULTAS -->
             <div id="screen-contact-menu" class="app-screen hidden p-6 space-y-5">
                 <div class="flex items-center gap-3">
                     <button onclick="switchScreen('screen-client-home')" class="text-zinc-400 hover:text-white transition"><i class="fa-solid fa-arrow-left text-lg"></i></button>
@@ -85,7 +97,6 @@
                 
                 <p class="text-sm text-zinc-300 font-medium">Hola Ayelén, necesito preguntarte:</p>
                 
-                <!-- Las 4 Opciones de Menú solicitadas -->
                 <div class="space-y-3" id="contact-options-list">
                     <button onclick="selectContactOption('Si puedes realizarme este tatuaje en concreto...')" class="w-full text-left bg-panelBg border border-borderGray p-3.5 rounded-xl text-xs font-semibold hover:border-indigo-500 hover:bg-zinc-900 transition flex justify-between items-center group">
                         <span class="pr-2">¿Si puedes realizarme este tatuaje en concreto?</span>
@@ -105,7 +116,7 @@
                     </button>
                 </div>
 
-                <!-- PASO 2: Aparecerá mágicamente al hacer clic en cualquiera de las opciones -->
+                <!-- PASO 2 -->
                 <div id="contact-step-2" class="hidden bg-[#16161a] p-4 rounded-xl border border-zinc-800 space-y-4 transition-all duration-300">
                     <div class="space-y-1">
                         <p class="text-[10px] uppercase tracking-wider text-indigo-400 font-semibold">Has elegido la consulta:</p>
@@ -117,7 +128,6 @@
                         <p class="flex gap-2"><span class="text-green-500 font-bold">✓</span> <strong>¡Muy importante!</strong> En WhatsApp, toca el botón de adjuntar (el clip o la cámara) y envíale la foto del tatuaje que deseas.</p>
                     </div>
 
-                    <!-- Botón final dinámico para enviar a WhatsApp -->
                     <a id="whatsapp-final-send-btn" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/20">
                         <i class="fa-brands fa-whatsapp text-sm"></i> Enviar Mensaje y Adjuntar Foto en WhatsApp
                     </a>
@@ -128,12 +138,10 @@
             <div id="screen-admin-dashboard" class="app-screen hidden p-6 space-y-6">
                 <h3 class="text-xl font-bold">Panel de Control</h3>
                 <div class="grid grid-cols-2 gap-4">
-                    <!-- Botón Ver Citas -->
                     <a href="https://calendly.com/event_types/user/me" target="_blank" class="bg-panelBg p-4 rounded-xl border border-borderGray text-center hover:border-emerald-600 transition block">
                         <i class="fa-solid fa-calendar-check text-emerald-500 mb-2 text-lg"></i>
                         <p class="text-xs font-semibold">Ver Citas</p>
                     </a>
-                    <!-- Botón Ver Catálogo -->
                     <button onclick="switchScreen('screen-gallery')" class="bg-panelBg p-4 rounded-xl border border-borderGray text-center hover:border-blue-500 transition block w-full">
                         <i class="fa-solid fa-paintbrush text-blue-500 mb-2 text-lg"></i>
                         <p class="text-xs font-semibold">Ver Catálogo</p>
@@ -253,7 +261,6 @@
             document.querySelectorAll('.app-screen').forEach(s => s.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
             
-            // Si salimos de la pantalla de contacto, reiniciamos el paso 2
             if(id !== 'screen-contact-menu') {
                 const step2 = document.getElementById('contact-step-2');
                 if(step2) step2.classList.add('hidden');
@@ -261,27 +268,16 @@
         }
 
         function selectContactOption(optionText) {
-            // Ponemos la opción elegida en la etiqueta de confirmación
             document.getElementById('selected-option-label').innerText = optionText;
-            
-            // Creamos un mensaje amigable y súper directo para el WhatsApp de Ayelén
             const message = `Hola Ayelén, necesito preguntarte:\n\n*${optionText}*\n\n(Aquí te adjunto la foto del tatuaje 👇)`;
-            
-            // Codificamos el mensaje para que sea válido como enlace de internet
             const encodedMessage = encodeURIComponent(message);
-            
-            // Enlace de WhatsApp final con tu número y el texto personalizado
             const finalUrl = `https://wa.me/34622123581?text=${encodedMessage}`;
-            
-            // Configuramos el enlace en el botón de envío final
             const sendBtn = document.getElementById('whatsapp-final-send-btn');
             sendBtn.href = finalUrl;
             
-            // Hacemos visible el paso 2 (la confirmación y el botón final)
             const step2Box = document.getElementById('contact-step-2');
             step2Box.classList.remove('hidden');
             
-            // Desplazamos suavemente para que el usuario lo vea en pantallas pequeñas
             setTimeout(() => {
                 step2Box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }, 150);
