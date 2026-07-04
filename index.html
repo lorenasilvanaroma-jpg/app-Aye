@@ -8,7 +8,7 @@
     <!-- Configuración PWA e Iconos para móviles -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-web-app-capable" content="yes">
-    <meta name="apple-web-app-status-bar-style" content="black">
+    <meta name="apple-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-web-app-title" content="Marotoart">
     
     <!-- Enlace al archivo de configuración física (Perfecto para Brave) -->
@@ -19,67 +19,103 @@
     <link class="apple-touch-icon" rel="apple-touch-icon" href="logo.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <script>
-        tailwind.config = { theme: { extend: { colors: { darkBg: '#0A0A0C', panelBg: '#121215', borderGray: '#222226' } } } }
+        tailwind.config = { 
+            theme: { 
+                extend: { 
+                    colors: { 
+                        darkBg: '#020617',     /* Negro azulado profundo */
+                        panelBg: '#090F21',    /* Azul marino oscuro para tarjetas */
+                        borderGray: '#1E293B', /* Bordes elegantes */
+                        celeste: '#38BDF8',    /* Celeste eléctrico de acento */
+                        azulon: '#2563EB',     /* Azulón más marcado */
+                        celesteHover: '#0EA5E9'
+                    } 
+                } 
+            } 
+        }
     </script>
+    
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+        }
+    </style>
 </head>
 <body class="bg-neutral-950 text-zinc-100 min-h-screen flex flex-col justify-center items-center py-6 px-4 font-sans">
 
-    <div class="relative w-[380px] h-[820px] bg-black rounded-[48px] border-[8px] border-zinc-800 overflow-hidden flex flex-col">
+    <!-- MARCO DEL MÓVIL SIMULADO -->
+    <div class="relative w-[380px] h-[820px] bg-black rounded-[48px] border-[8px] border-zinc-800 overflow-hidden flex flex-col shadow-2xl">
+        
         <!-- BARRA DE HORA SUPERIOR -->
-        <div class="h-10 bg-darkBg px-6 pt-3 flex justify-between items-center z-40">
-            <span class="text-xs text-zinc-300">22:38</span>
+        <div class="h-10 bg-black px-6 pt-3 flex justify-between items-center z-40">
+            <span class="text-xs text-zinc-400">22:38</span>
+            <div class="flex items-center gap-1.5 text-zinc-400 text-xs">
+                <i class="fa-solid fa-signal"></i>
+                <i class="fa-solid fa-wifi"></i>
+                <i class="fa-solid fa-battery-three-quarters"></i>
+            </div>
         </div>
 
-        <div class="flex-1 bg-darkBg overflow-y-auto no-scrollbar">
+        <!-- CUERPO DE LA APP CON DEGRADADO (De negro a azulón profundo) -->
+        <div class="flex-1 bg-gradient-to-b from-black via-[#040814] to-[#0a1530] overflow-y-auto no-scrollbar flex flex-col">
             
             <!-- BIENVENIDA -->
-            <div id="screen-welcome" class="app-screen flex-1 flex flex-col justify-center p-6 space-y-8">
-                <!-- Contenedor del Logo con alternativa si falla -->
-                <div class="w-36 h-36 mx-auto rounded-full border-4 border-zinc-800 bg-zinc-900 flex items-center justify-center overflow-hidden shadow-2xl relative">
+            <div id="screen-welcome" class="app-screen flex-1 flex flex-col justify-center p-6 space-y-8 relative overflow-hidden">
+                
+                <!-- Efecto de Aura de Luz Celeste de fondo (Glow) detrás del logo -->
+                <div class="absolute top-[20%] left-1/2 -translate-x-1/2 w-48 h-48 bg-sky-500/10 rounded-full blur-[45px] pointer-events-none"></div>
+
+                <!-- Contenedor del Logo con brillo celeste suave -->
+                <div class="w-36 h-36 mx-auto rounded-full border-2 border-celeste/30 bg-[#050b18] flex items-center justify-center overflow-hidden shadow-[0_0_25px_rgba(56,189,248,0.2)] relative z-10">
                     <img id="app-logo" src="logo.png" alt="Marotoart Logo" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; document.getElementById('logo-placeholder').classList.remove('hidden');">
-                    <div id="logo-placeholder" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-zinc-900">
+                    <div id="logo-placeholder" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-[#090F21]">
                         <i class="fa-solid fa-circle-user text-6xl text-zinc-700"></i>
                     </div>
                 </div>
-                <div class="text-center space-y-1">
-                    <h2 class="text-2xl font-bold text-white lowercase">marotoart_tattoo</h2>
-                    <p class="text-sm text-zinc-300 font-medium">Ayelén Rojas 🌹</p>
+                
+                <div class="text-center space-y-1 relative z-10">
+                    <h2 class="text-2xl font-bold text-white tracking-wide lowercase">marotoart_tattoo</h2>
+                    <p class="text-sm text-sky-400 font-semibold tracking-wider">Ayelén Rojas 🌹</p>
                 </div>
-                <div class="space-y-3">
-                    <button onclick="switchScreen('screen-client-home')" class="w-full bg-white text-black font-semibold py-3.5 rounded-xl text-sm hover:bg-zinc-200 transition">Acceder como Cliente</button>
-                    <button onclick="switchScreen('screen-admin-dashboard')" class="w-full bg-panelBg text-zinc-300 border border-borderGray py-3 rounded-xl text-xs hover:bg-zinc-900 transition">Panel de Ayelén</button>
+
+                <!-- Botones con Degradado Azulón a Celeste Metálico -->
+                <div class="space-y-3 relative z-10">
+                    <button onclick="switchScreen('screen-client-home')" class="w-full bg-gradient-to-r from-sky-400 via-cyan-400 to-blue-600 text-neutral-950 font-extrabold py-3.5 rounded-xl text-sm hover:brightness-110 transition shadow-lg shadow-sky-500/15">
+                        Acceder como Cliente
+                    </button>
+                    <button onclick="switchScreen('screen-admin-dashboard')" class="w-full bg-[#090F21]/80 text-zinc-400 border border-borderGray py-3 rounded-xl text-xs hover:bg-slate-900 transition backdrop-blur-sm">
+                        Panel de Ayelén
+                    </button>
                 </div>
             </div>
 
             <!-- PANEL CLIENTE -->
-            <div id="screen-client-home" class="app-screen hidden p-6 space-y-6">
-                <h3 class="text-xl font-bold">Reserva tu hueco</h3>
-                
-                <!-- Bloque de catálogo visible para el cliente -->
-                <div class="bg-panelBg p-4 rounded-xl border border-borderGray space-y-3">
-                    <p class="text-zinc-400 text-sm">¿Quieres ver los últimos diseños disponibles antes de reservar?</p>
-                    <button onclick="switchScreen('screen-gallery')" class="w-full bg-zinc-800 text-white py-2.5 rounded-lg font-medium hover:bg-zinc-700 transition text-xs flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-images text-blue-400"></i> Ver Catálogo de Diseños
-                    </button>
-                </div>
+            <div id="screen-client-home" class="app-screen hidden p-6 space-y-5">
+                <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                    <span class="w-1.5 h-5 bg-gradient-to-b from-sky-400 to-blue-600 rounded-full"></span> Reserva tu hueco
+                </h3>
 
                 <!-- Bloque de reserva con Calendly -->
-                <div class="bg-panelBg p-4 rounded-xl border border-borderGray">
-                    <p class="text-zinc-400 text-sm mb-4">Selecciona fecha y realiza el pago de la señal para confirmar.</p>
-                    <a href="https://calendly.com/lorena7750" target="_blank" class="block w-full bg-emerald-600 text-white py-3 rounded-lg font-bold hover:bg-emerald-700 transition text-center text-sm">Reservar Tatuaje</a>
+                <div class="bg-panelBg/60 backdrop-blur-sm p-4 rounded-xl border border-borderGray space-y-3">
+                    <p class="text-zinc-300 text-xs">Selecciona fecha y realiza el pago de la señal para confirmar tu cita.</p>
+                    <a href="https://calendly.com/lorena7750" target="_blank" class="block w-full bg-gradient-to-r from-sky-400 to-blue-600 text-neutral-950 py-3 rounded-lg font-extrabold hover:brightness-110 transition text-center text-xs shadow-md shadow-sky-500/10">
+                        Reservar Tatuaje
+                    </a>
                 </div>
 
-                <!-- Bloque de Contacto y Redes Sociales -->
-                <div class="bg-panelBg p-4 rounded-xl border border-borderGray space-y-3">
-                    <p class="text-zinc-400 text-sm">¿Tienes dudas con tu diseño? Contacta directamente:</p>
+                <!-- Bloque de Contacto Directo -->
+                <div class="bg-panelBg/60 backdrop-blur-sm p-4 rounded-xl border border-borderGray space-y-3">
+                    <p class="text-zinc-300 text-xs">¿Tienes dudas con tu diseño? Contacta directamente:</p>
                     <div class="grid grid-cols-2 gap-3">
-                        <button onclick="switchScreen('screen-contact-menu')" class="bg-zinc-900 border border-borderGray py-2.5 rounded-lg text-xs font-semibold hover:border-green-500 transition flex items-center justify-center gap-2 w-full">
-                            <i class="fa-brands fa-whatsapp text-green-500 text-sm"></i> WhatsApp
+                        <button onclick="switchScreen('screen-contact-menu')" class="bg-slate-950/60 border border-borderGray py-2.5 rounded-lg text-xs font-bold hover:border-sky-400 transition flex items-center justify-center gap-2 w-full text-zinc-200">
+                            <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i> WhatsApp
                         </button>
-                        <a href="https://www.instagram.com/marotoart_tattoo/" target="_blank" class="bg-zinc-900 border border-borderGray py-2.5 rounded-lg text-xs font-semibold hover:border-pink-500 transition flex items-center justify-center gap-2">
+                        <a href="https://www.instagram.com/marotoart_tattoo/" target="_blank" class="bg-slate-950/60 border border-borderGray py-2.5 rounded-lg text-xs font-bold hover:border-pink-500 transition flex items-center justify-center gap-2 text-zinc-200">
                             <i class="fa-brands fa-instagram text-pink-500 text-sm"></i> Instagram
                         </a>
                     </div>
@@ -90,166 +126,78 @@
             <div id="screen-contact-menu" class="app-screen hidden p-6 space-y-5">
                 <div class="flex items-center gap-3">
                     <button onclick="switchScreen('screen-client-home')" class="text-zinc-400 hover:text-white transition"><i class="fa-solid fa-arrow-left text-lg"></i></button>
-                    <h3 class="text-xl font-bold">Consultas WhatsApp</h3>
+                    <h3 class="text-xl font-bold text-white">Consultas WhatsApp</h3>
                 </div>
                 
-                <p class="text-sm text-zinc-300 font-medium">Hola Ayelén, necesito preguntarte:</p>
+                <p class="text-xs text-zinc-300 font-medium">Hola Ayelén, necesito preguntarte:</p>
                 
-                <div class="space-y-3" id="contact-options-list">
-                    <button onclick="selectContactOption('Si puedes realizarme este tatuaje en concreto...')" class="w-full text-left bg-panelBg border border-borderGray p-3.5 rounded-xl text-xs font-semibold hover:border-indigo-500 hover:bg-zinc-900 transition flex justify-between items-center group">
-                        <span class="pr-2">¿Si puedes realizarme este tatuaje en concreto?</span>
-                        <i class="fa-solid fa-chevron-right text-zinc-600 group-hover:text-white transition"></i>
+                <div class="space-y-2.5" id="contact-options-list">
+                    <button onclick="selectContactOption('Si puedes realizarme este tatuaje en concreto...')" class="w-full text-left bg-panelBg/80 border border-borderGray p-3.5 rounded-xl text-xs font-semibold hover:border-sky-400 hover:bg-slate-950 transition flex justify-between items-center group">
+                        <span class="pr-2 text-zinc-200">¿Si puedes realizarme este tatuaje en concreto?</span>
+                        <i class="fa-solid fa-chevron-right text-zinc-500 group-hover:text-sky-400 transition"></i>
                     </button>
-                    <button onclick="selectContactOption('Puedes hacerme este tatuaje de este tamaño...')" class="w-full text-left bg-panelBg border border-borderGray p-3.5 rounded-xl text-xs font-semibold hover:border-indigo-500 hover:bg-zinc-900 transition flex justify-between items-center group">
-                        <span class="pr-2">¿Puedes hacerme este tatuaje de este tamaño?</span>
-                        <i class="fa-solid fa-chevron-right text-zinc-600 group-hover:text-white transition"></i>
+                    <button onclick="selectContactOption('Puedes hacerme este tatuaje de este tamaño...')" class="w-full text-left bg-panelBg/80 border border-borderGray p-3.5 rounded-xl text-xs font-semibold hover:border-sky-400 hover:bg-slate-950 transition flex justify-between items-center group">
+                        <span class="pr-2 text-zinc-200">¿Puedes hacerme este tatuaje de este tamaño?</span>
+                        <i class="fa-solid fa-chevron-right text-zinc-500 group-hover:text-sky-400 transition"></i>
                     </button>
-                    <button onclick="selectContactOption('Puedes hacerme este tatuaje en...')" class="w-full text-left bg-panelBg border border-borderGray p-3.5 rounded-xl text-xs font-semibold hover:border-indigo-500 hover:bg-zinc-900 transition flex justify-between items-center group">
-                        <span class="pr-2">¿Puedes hacerme este tatuaje en...? (zona de cuerpo)</span>
-                        <i class="fa-solid fa-chevron-right text-zinc-600 group-hover:text-white transition"></i>
+                    <button onclick="selectContactOption('Puedes hacerme este tatuaje en...')" class="w-full text-left bg-panelBg/80 border border-borderGray p-3.5 rounded-xl text-xs font-semibold hover:border-sky-400 hover:bg-slate-950 transition flex justify-between items-center group">
+                        <span class="pr-2 text-zinc-200">¿Puedes hacerme este tatuaje en...? (zona de cuerpo)</span>
+                        <i class="fa-solid fa-chevron-right text-zinc-500 group-hover:text-sky-400 transition"></i>
                     </button>
-                    <button onclick="selectContactOption('Cuanto me cobras por este tatuaje...')" class="w-full text-left bg-panelBg border border-borderGray p-3.5 rounded-xl text-xs font-semibold hover:border-indigo-500 hover:bg-zinc-900 transition flex justify-between items-center group">
-                        <span class="pr-2">¿Cuánto me cobras por este tatuaje?</span>
-                        <i class="fa-solid fa-chevron-right text-zinc-600 group-hover:text-white transition"></i>
+                    <button onclick="selectContactOption('Cuanto me cobras por este tatuaje...')" class="w-full text-left bg-panelBg/80 border border-borderGray p-3.5 rounded-xl text-xs font-semibold hover:border-sky-400 hover:bg-slate-950 transition flex justify-between items-center group">
+                        <span class="pr-2 text-zinc-200">¿Cuánto me cobras por este tatuaje?</span>
+                        <i class="fa-solid fa-chevron-right text-zinc-500 group-hover:text-sky-400 transition"></i>
                     </button>
                 </div>
 
-                <!-- PASO 2 -->
-                <div id="contact-step-2" class="hidden bg-[#16161a] p-4 rounded-xl border border-zinc-800 space-y-4 transition-all duration-300">
+                <!-- PASO 2: CONFIRMACIÓN Y ENVÍO -->
+                <div id="contact-step-2" class="hidden bg-slate-950 p-4 rounded-xl border border-borderGray space-y-4 transition-all duration-300">
                     <div class="space-y-1">
-                        <p class="text-[10px] uppercase tracking-wider text-indigo-400 font-semibold">Has elegido la consulta:</p>
+                        <p class="text-[10px] uppercase tracking-wider text-sky-400 font-bold">Has elegido la consulta:</p>
                         <p id="selected-option-label" class="text-xs italic text-zinc-200 font-medium"></p>
                     </div>
                     
-                    <div class="bg-zinc-950 p-3 rounded-lg border border-borderGray text-xs text-zinc-400 space-y-2">
-                        <p class="flex gap-2"><span class="text-green-500 font-bold">✓</span> Al presionar el botón verde de abajo, se abrirá tu chat con Ayelén.</p>
-                        <p class="flex gap-2"><span class="text-green-500 font-bold">✓</span> <strong>¡Muy importante!</strong> En WhatsApp, toca el botón de adjuntar (el clip o la cámara) y envíale la foto del tatuaje que deseas.</p>
+                    <div class="bg-panelBg/80 p-3 rounded-lg border border-borderGray text-xs text-zinc-400 space-y-2">
+                        <p class="flex gap-2"><span class="text-emerald-400 font-bold">✓</span> Se abrirá tu chat con Ayelén.</p>
+                        <p class="flex gap-2"><span class="text-emerald-400 font-bold">✓</span> <strong>¡Recuerda!</strong> En WhatsApp, envíale la foto del tatuaje que deseas.</p>
                     </div>
 
                     <a id="whatsapp-final-send-btn" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/20">
-                        <i class="fa-brands fa-whatsapp text-sm"></i> Enviar Mensaje y Adjuntar Foto en WhatsApp
+                        <i class="fa-brands fa-whatsapp text-sm"></i> Enviar a WhatsApp con Foto
                     </a>
                 </div>
             </div>
 
             <!-- PANEL AYELÉN (ADMIN) -->
-            <div id="screen-admin-dashboard" class="app-screen hidden p-6 space-y-6">
-                <h3 class="text-xl font-bold">Panel de Control</h3>
-                <div class="grid grid-cols-2 gap-4">
-                    <a href="https://calendly.com/event_types/user/me" target="_blank" class="bg-panelBg p-4 rounded-xl border border-borderGray text-center hover:border-emerald-600 transition block">
-                        <i class="fa-solid fa-calendar-check text-emerald-500 mb-2 text-lg"></i>
-                        <p class="text-xs font-semibold">Ver Citas</p>
-                    </a>
-                    <button onclick="switchScreen('screen-gallery')" class="bg-panelBg p-4 rounded-xl border border-borderGray text-center hover:border-blue-500 transition block w-full">
-                        <i class="fa-solid fa-paintbrush text-blue-500 mb-2 text-lg"></i>
-                        <p class="text-xs font-semibold">Ver Catálogo</p>
-                    </button>
-                </div>
-                <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800">
-                    <p class="text-xs text-zinc-400">Desde aquí puedes revisar tu agenda de reservas de Calendly y comprobar cómo ven los clientes tu catálogo.</p>
-                </div>
-            </div>
-
-            <!-- GALERÍA PÚBLICA DE DISEÑOS (20 FOTOS) -->
-            <div id="screen-gallery" class="app-screen hidden p-6 space-y-6">
-                <div class="flex justify-between items-center">
-                    <h3 class="text-xl font-bold">Catálogo de Diseños</h3>
-                    <button onclick="switchScreen('screen-welcome')" class="text-xs text-zinc-400 hover:text-white bg-panelBg px-3 py-1.5 rounded-lg border border-borderGray">Inicio</button>
-                </div>
+            <div id="screen-admin-dashboard" class="app-screen hidden p-6 space-y-5">
+                <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                    <span class="w-1.5 h-5 bg-gradient-to-b from-sky-400 to-blue-600 rounded-full"></span> Panel de Control
+                </h3>
                 
-                <p class="text-zinc-400 text-xs">Echa un vistazo a las creaciones disponibles. Cuando encuentres el tuyo, vuelve a la sección de reserva.</p>
+                <div class="space-y-4">
+                    <a href="https://calendly.com/event_types/user/me" target="_blank" class="bg-panelBg/60 backdrop-blur-sm p-5 rounded-xl border border-borderGray text-center hover:border-sky-400 transition block shadow-lg shadow-sky-950/20">
+                        <i class="fa-solid fa-calendar-check text-sky-400 mb-3 text-2xl"></i>
+                        <p class="text-sm font-semibold text-zinc-100">Ver Mis Citas (Calendly)</p>
+                    </a>
+                </div>
 
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje1.png" alt="Tatuaje 1" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">1</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje2.png" alt="Tatuaje 2" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">2</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje3.png" alt="Tatuaje 3" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">3</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje4.png" alt="Tatuaje 4" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">4</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje5.png" alt="Tatuaje 5" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">5</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje6.png" alt="Tatuaje 6" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">6</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje7.png" alt="Tatuaje 7" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">7</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje8.png" alt="Tatuaje 8" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">8</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje9.png" alt="Tatuaje 9" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">9</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje10.png" alt="Tatuaje 10" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">10</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje11.png" alt="Tatuaje 11" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">11</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje12.png" alt="Tatuaje 12" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">12</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje13.png" alt="Tatuaje 13" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">13</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje14.png" alt="Tatuaje 14" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">14</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje15.png" alt="Tatuaje 15" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">15</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje16.png" alt="Tatuaje 16" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">16</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje17.png" alt="Tatuaje 17" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">17</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje18.png" alt="Tatuaje 18" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">18</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje19.png" alt="Tatuaje 19" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">19</span>
-                    </div>
-                    <div class="bg-panelBg aspect-square rounded-xl border border-borderGray flex flex-col items-center justify-center overflow-hidden relative group">
-                        <img src="tatuaje20.png" alt="Tatuaje 20" class="w-full h-full object-cover onerror-replace">
-                        <span class="absolute bottom-2 left-2 bg-black/70 text-[10px] px-2 py-0.5 rounded text-zinc-300">20</span>
-                    </div>
+                <div class="bg-slate-950/60 p-4 rounded-xl border border-borderGray">
+                    <p class="text-xs text-zinc-400 leading-relaxed">Controla la agenda y revisa todas tus citas confirmadas directamente conectándote con tu portal de administración de Calendly.</p>
                 </div>
             </div>
 
         </div>
 
-        <!-- MENÚ DE NAVEGACIÓN INFERIOR (GLOBAL) -->
-        <div class="bg-panelBg border-t border-borderGray py-3 flex justify-around">
-            <button onclick="switchScreen('screen-client-home')" class="text-zinc-500 hover:text-white"><i class="fa-solid fa-calendar"></i></button>
-            <button onclick="switchScreen('screen-gallery')" class="w-10 h-10 rounded-full bg-zinc-900 -mt-5 border border-zinc-700 text-white flex items-center justify-center hover:bg-zinc-800 transition"><i class="fa-solid fa-images"></i></button>
-            <button onclick="switchScreen('screen-admin-dashboard')" class="text-zinc-500 hover:text-white"><i class="fa-solid fa-sliders"></i></button>
+        <!-- MENÚ DE NAVEGACIÓN INFERIOR (2 BOTONES SIMÉTRICOS) -->
+        <div class="bg-[#050b18] border-t border-borderGray py-4 flex justify-around items-center z-40">
+            <button onclick="switchScreen('screen-client-home')" class="text-zinc-500 hover:text-sky-400 transition flex flex-col items-center gap-1">
+                <i class="fa-solid fa-calendar-day text-xl"></i>
+                <span class="text-[9px] uppercase tracking-wider font-semibold">Reservas</span>
+            </button>
+            <button onclick="switchScreen('screen-admin-dashboard')" class="text-zinc-500 hover:text-sky-400 transition flex flex-col items-center gap-1">
+                <i class="fa-solid fa-sliders text-xl"></i>
+                <span class="text-[9px] uppercase tracking-wider font-semibold">Panel Admin</span>
+            </button>
         </div>
     </div>
 
@@ -280,16 +228,6 @@
                 step2Box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }, 150);
         }
-
-        document.querySelectorAll('.onerror-replace').forEach(img => {
-            img.onerror = function() {
-                this.style.display = 'none';
-                const p = document.createElement('p');
-                p.className = 'text-[10px] text-zinc-500 text-center p-2';
-                p.innerText = 'Foto ' + this.getAttribute('alt').replace('Tatuaje ', '');
-                this.parentNode.appendChild(p);
-            };
-        });
     </script>
 </body>
 </html>
