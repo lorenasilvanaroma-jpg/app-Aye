@@ -5,18 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marotoart Tattoo</title>
     
-    <!-- Configuración PWA e Iconos -->
+    <!-- Configuración PWA e Iconos para móviles -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Marotoart">
     
-    <!-- Enlaces directos para que el móvil reconozca tu logo.png como icono -->
+    <!-- Enlaces directos de iconos fallback -->
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="apple-touch-icon" href="logo.png">
     
-    <!-- Manifiesto integrado para que Android reconozca el icono de forma nativa al instalar -->
-    <link rel="manifest" href='data:application/manifest+json,{"name":"Marotoart Tattoo","short_name":"Marotoart","start_url":".","display":"standalone","background_color":"#0A0A0C","theme_color":"#0A0A0C","icons":[{"src":"logo.png","sizes":"192x192","type":"image/png"},{"src":"logo.png","sizes":"512x512","type":"image/png"}]}'>
+    <script>
+        // Este script detecta la URL real en producción y le da a Android la ruta absoluta de logo.png
+        (function() {
+            const baseUrl = window.location.href.split('#')[0].split('?')[0];
+            const baseDir = baseUrl.substring(0, baseUrl.lastIndexOf('/') + 1);
+            const absoluteLogoUrl = baseDir + 'logo.png';
+
+            const manifestData = {
+                "name": "Marotoart Tattoo",
+                "short_name": "Marotoart",
+                "start_url": baseUrl,
+                "display": "standalone",
+                "background_color": "#0A0A0C",
+                "theme_color": "#0A0A0C",
+                "icons": [
+                    {
+                        "src": absoluteLogoUrl,
+                        "sizes": "192x192",
+                        "type": "image/png"
+                    },
+                    {
+                        "src": absoluteLogoUrl,
+                        "sizes": "512x512",
+                        "type": "image/png"
+                    }
+                ]
+            };
+
+            const manifestUri = 'data:application/manifest+json,' + encodeURIComponent(JSON.stringify(manifestData));
+            const link = document.createElement('link');
+            link.rel = 'manifest';
+            link.href = manifestUri;
+            document.head.appendChild(link);
+        })();
+    </script>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
