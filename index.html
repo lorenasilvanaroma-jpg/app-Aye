@@ -64,15 +64,63 @@
                 <div class="bg-panelBg p-4 rounded-xl border border-borderGray space-y-3">
                     <p class="text-zinc-400 text-sm">¿Tienes dudas con tu diseño? Contacta directamente:</p>
                     <div class="grid grid-cols-2 gap-3">
-                        <!-- Botón WhatsApp con el número real -->
-                        <a href="https://wa.me/34622123581?text=Hola%20Ayelén,%20quiero%20consultarte%20sobre%20un%20tatuaje" target="_blank" class="bg-zinc-900 border border-borderGray py-2.5 rounded-lg text-xs font-semibold hover:border-green-500 transition flex items-center justify-center gap-2">
+                        <!-- Botón WhatsApp que ahora abre el MENÚ INTERACTIVO interno en vez del enlace directo -->
+                        <button onclick="switchScreen('screen-contact-menu')" class="bg-zinc-900 border border-borderGray py-2.5 rounded-lg text-xs font-semibold hover:border-green-500 transition flex items-center justify-center gap-2 w-full">
                             <i class="fa-brands fa-whatsapp text-green-500 text-sm"></i> WhatsApp
-                        </a>
+                        </button>
                         <!-- Botón Instagram -->
                         <a href="https://www.instagram.com/marotoart_tattoo/" target="_blank" class="bg-zinc-900 border border-borderGray py-2.5 rounded-lg text-xs font-semibold hover:border-pink-500 transition flex items-center justify-center gap-2">
                             <i class="fa-brands fa-instagram text-pink-500 text-sm"></i> Instagram
                         </a>
                     </div>
+                </div>
+            </div>
+
+            <!-- NUEVA PANTALLA: MENÚ INTERACTIVO DE CONSULTAS -->
+            <div id="screen-contact-menu" class="app-screen hidden p-6 space-y-5">
+                <div class="flex items-center gap-3">
+                    <button onclick="switchScreen('screen-client-home')" class="text-zinc-400 hover:text-white transition"><i class="fa-solid fa-arrow-left text-lg"></i></button>
+                    <h3 class="text-xl font-bold">Consultas WhatsApp</h3>
+                </div>
+                
+                <p class="text-sm text-zinc-300 font-medium">Hola Ayelén, necesito preguntarte:</p>
+                
+                <!-- Las 4 Opciones de Menú solicitadas -->
+                <div class="space-y-3" id="contact-options-list">
+                    <button onclick="selectContactOption('Si puedes realizarme este tatuaje en concreto...')" class="w-full text-left bg-panelBg border border-borderGray p-3.5 rounded-xl text-xs font-semibold hover:border-indigo-500 hover:bg-zinc-900 transition flex justify-between items-center group">
+                        <span class="pr-2">¿Si puedes realizarme este tatuaje en concreto?</span>
+                        <i class="fa-solid fa-chevron-right text-zinc-600 group-hover:text-white transition"></i>
+                    </button>
+                    <button onclick="selectContactOption('Puedes hacerme este tatuaje de este tamaño...')" class="w-full text-left bg-panelBg border border-borderGray p-3.5 rounded-xl text-xs font-semibold hover:border-indigo-500 hover:bg-zinc-900 transition flex justify-between items-center group">
+                        <span class="pr-2">¿Puedes hacerme este tatuaje de este tamaño?</span>
+                        <i class="fa-solid fa-chevron-right text-zinc-600 group-hover:text-white transition"></i>
+                    </button>
+                    <button onclick="selectContactOption('Puedes hacerme este tatuaje en...')" class="w-full text-left bg-panelBg border border-borderGray p-3.5 rounded-xl text-xs font-semibold hover:border-indigo-500 hover:bg-zinc-900 transition flex justify-between items-center group">
+                        <span class="pr-2">¿Puedes hacerme este tatuaje en...? (zona de cuerpo)</span>
+                        <i class="fa-solid fa-chevron-right text-zinc-600 group-hover:text-white transition"></i>
+                    </button>
+                    <button onclick="selectContactOption('Cuanto me cobras por este tatuaje...')" class="w-full text-left bg-panelBg border border-borderGray p-3.5 rounded-xl text-xs font-semibold hover:border-indigo-500 hover:bg-zinc-900 transition flex justify-between items-center group">
+                        <span class="pr-2">¿Cuánto me cobras por este tatuaje?</span>
+                        <i class="fa-solid fa-chevron-right text-zinc-600 group-hover:text-white transition"></i>
+                    </button>
+                </div>
+
+                <!-- PASO 2: Aparecerá mágicamente al hacer clic en cualquiera de las opciones -->
+                <div id="contact-step-2" class="hidden bg-[#16161a] p-4 rounded-xl border border-zinc-800 space-y-4 transition-all duration-300">
+                    <div class="space-y-1">
+                        <p class="text-[10px] uppercase tracking-wider text-indigo-400 font-semibold">Has elegido la consulta:</p>
+                        <p id="selected-option-label" class="text-xs italic text-zinc-200 font-medium"></p>
+                    </div>
+                    
+                    <div class="bg-zinc-950 p-3 rounded-lg border border-borderGray text-xs text-zinc-400 space-y-2">
+                        <p class="flex gap-2"><span class="text-green-500 font-bold">✓</span> Al presionar el botón verde de abajo, se abrirá tu chat con Ayelén.</p>
+                        <p class="flex gap-2"><span class="text-green-500 font-bold">✓</span> <strong>¡Muy importante!</strong> En WhatsApp, toca el botón de adjuntar (el clip o la cámara) y envíale la foto del tatuaje que deseas.</p>
+                    </div>
+
+                    <!-- Botón final dinámico para enviar a WhatsApp -->
+                    <a id="whatsapp-final-send-btn" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/20">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> Enviar Mensaje y Adjuntar Foto en WhatsApp
+                    </a>
                 </div>
             </div>
 
@@ -199,10 +247,44 @@
         </div>
     </div>
 
+    <!-- SCRIPT DE COMPORTAMIENTO -->
     <script>
         function switchScreen(id) {
             document.querySelectorAll('.app-screen').forEach(s => s.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
+            
+            // Si salimos de la pantalla de contacto, reiniciamos el paso 2
+            if(id !== 'screen-contact-menu') {
+                const step2 = document.getElementById('contact-step-2');
+                if(step2) step2.classList.add('hidden');
+            }
+        }
+
+        function selectContactOption(optionText) {
+            // Ponemos la opción elegida en la etiqueta de confirmación
+            document.getElementById('selected-option-label').innerText = optionText;
+            
+            // Creamos un mensaje amigable y súper directo para el WhatsApp de Ayelén
+            const message = `Hola Ayelén, necesito preguntarte:\n\n*${optionText}*\n\n(Aquí te adjunto la foto del tatuaje 👇)`;
+            
+            // Codificamos el mensaje para que sea válido como enlace de internet
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Enlace de WhatsApp final con tu número y el texto personalizado
+            const finalUrl = `https://wa.me/34622123581?text=${encodedMessage}`;
+            
+            // Configuramos el enlace en el botón de envío final
+            const sendBtn = document.getElementById('whatsapp-final-send-btn');
+            sendBtn.href = finalUrl;
+            
+            // Hacemos visible el paso 2 (la confirmación y el botón final)
+            const step2Box = document.getElementById('contact-step-2');
+            step2Box.classList.remove('hidden');
+            
+            // Desplazamos suavemente para que el usuario lo vea en pantallas pequeñas
+            setTimeout(() => {
+                step2Box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 150);
         }
 
         document.querySelectorAll('.onerror-replace').forEach(img => {
