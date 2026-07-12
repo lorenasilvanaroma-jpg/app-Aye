@@ -11,15 +11,16 @@
     <meta name="apple-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-web-app-title" content="Marotoart">
     
-    <!-- Enlace al archivo de configuración física (Perfecto para Brave) -->
+    <!-- Enlace al archivo de configuración física -->
     <link rel="manifest" href="manifest.json">
     
     <!-- Enlaces directos de iconos fallback -->
     <link rel="icon" type="image/png" href="logo.png">
     <link class="apple-touch-icon" rel="apple-touch-icon" href="logo.png">
     
+    <!-- Tailwind CSS y Fuentes -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
@@ -27,33 +28,29 @@
             theme: { 
                 extend: { 
                     colors: { 
-                        darkBg: '#020617',     /* Negro azulado profundo */
-                        panelBg: '#090F21',    /* Azul marino oscuro para tarjetas */
-                        borderGray: '#1E293B', /* Bordes elegantes */
-                        celeste: '#38BDF8',    /* Celeste eléctrico de acento */
-                        azulon: '#2563EB',     /* Azulón más marcado */
-                        celesteHover: '#0EA5E9'
+                        darkBg: '#02040a', 
+                        panelBg: '#070f24', 
+                        borderGray: '#15244b' 
                     } 
                 } 
             } 
         }
     </script>
-    
     <style>
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .glow-effect {
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+        .app-screen {
+            transition: opacity 0.2s ease-in-out;
         }
     </style>
 </head>
-<body class="bg-neutral-950 text-zinc-100 min-h-screen flex flex-col justify-center items-center py-6 px-4 font-sans">
+<body class="bg-[#020307] text-zinc-100 min-h-screen flex flex-col justify-center items-center py-6 px-4 font-sans">
 
-    <!-- MARCO DEL MÓVIL SIMULADO -->
-    <div class="relative w-[380px] h-[820px] bg-black rounded-[48px] border-[8px] border-zinc-800 overflow-hidden flex flex-col shadow-2xl">
+    <!-- MARCO DEL TELÉFONO -->
+    <div class="relative w-[380px] h-[820px] bg-black rounded-[48px] border-[8px] border-zinc-800 overflow-hidden flex flex-col shadow-2xl shadow-sky-950/20">
         
-        <!-- BARRA DE HORA SUPERIOR -->
-        <div class="h-10 bg-black px-6 pt-3 flex justify-between items-center z-40">
-            <span class="text-xs text-zinc-400">22:38</span>
+        <!-- BARRA DE HORA SUPERIOR (ESTILO MÓVIL) -->
+        <div class="h-10 bg-darkBg/95 px-6 pt-3 flex justify-between items-center z-40">
+            <span class="text-xs text-zinc-300 font-medium">22:38</span>
             <div class="flex items-center gap-1.5 text-zinc-400 text-xs">
                 <i class="fa-solid fa-signal"></i>
                 <i class="fa-solid fa-wifi"></i>
@@ -61,162 +58,272 @@
             </div>
         </div>
 
-        <!-- CUERPO DE LA APP CON DEGRADADO (De negro a azulón profundo) -->
-        <div class="flex-1 bg-gradient-to-b from-black via-[#040814] to-[#0a1530] overflow-y-auto no-scrollbar flex flex-col">
+        <!-- CONTENIDO PRINCIPAL CON DEGRADADO AZULÓN DINÁMICO -->
+        <div class="flex-1 bg-gradient-to-b from-[#02040a] via-[#050e26] to-[#0e1f4d] overflow-y-auto no-scrollbar flex flex-col">
             
-            <!-- BIENVENIDA -->
-            <div id="screen-welcome" class="app-screen flex-1 flex flex-col justify-center p-6 space-y-8 relative overflow-hidden">
-                
-                <!-- Efecto de Aura de Luz Celeste de fondo (Glow) detrás del logo -->
-                <div class="absolute top-[20%] left-1/2 -translate-x-1/2 w-48 h-48 bg-sky-500/10 rounded-full blur-[45px] pointer-events-none"></div>
-
-                <!-- Contenedor del Logo con brillo celeste suave -->
-                <div class="w-36 h-36 mx-auto rounded-full border-2 border-celeste/30 bg-[#050b18] flex items-center justify-center overflow-hidden shadow-[0_0_25px_rgba(56,189,248,0.2)] relative z-10">
+            <!-- PANTALLA 1: BIENVENIDA -->
+            <div id="screen-welcome" class="app-screen flex-1 flex flex-col justify-center p-6 space-y-10">
+                <!-- Contenedor del Logo con Aura de Luz Celeste -->
+                <div class="w-36 h-36 mx-auto rounded-full border-4 border-sky-400/30 bg-[#060c1d] flex items-center justify-center overflow-hidden shadow-[0_0_35px_rgba(56,189,248,0.25)] relative group">
+                    <!-- Buscará logo.png (que será vuestra preciosa nueva sirena) -->
                     <img id="app-logo" src="logo.png" alt="Marotoart Logo" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; document.getElementById('logo-placeholder').classList.remove('hidden');">
-                    <div id="logo-placeholder" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-[#090F21]">
-                        <i class="fa-solid fa-circle-user text-6xl text-zinc-700"></i>
+                    <div id="logo-placeholder" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-[#070f24]">
+                        <i class="fa-solid fa-circle-user text-6xl text-sky-400/50"></i>
                     </div>
                 </div>
                 
-                <div class="text-center space-y-1 relative z-10">
-                    <h2 class="text-2xl font-bold text-white tracking-wide lowercase">marotoart_tattoo</h2>
-                    <p class="text-sm text-sky-400 font-semibold tracking-wider">Ayelén Rojas 🌹</p>
+                <div class="text-center space-y-1.5">
+                    <h1 class="text-2xl font-bold tracking-wider text-white lowercase">marotoart_tattoo</h1>
+                    <p class="text-sm text-sky-300/80 font-semibold tracking-wide">Ayelén Rojas 🌹</p>
                 </div>
 
-                <!-- Botones con Degradado Azulón a Celeste Metálico -->
-                <div class="space-y-3 relative z-10">
-                    <button onclick="switchScreen('screen-client-home')" class="w-full bg-gradient-to-r from-sky-400 via-cyan-400 to-blue-600 text-neutral-950 font-extrabold py-3.5 rounded-xl text-sm hover:brightness-110 transition shadow-lg shadow-sky-500/15">
+                <div class="space-y-3.5 pt-4">
+                    <button onclick="switchScreen('screen-client-home')" class="w-full bg-gradient-to-r from-sky-400 to-blue-500 text-white font-bold py-4 rounded-xl text-sm shadow-lg shadow-sky-500/20 hover:from-sky-500 hover:to-blue-600 transition duration-300 transform active:scale-95">
                         Acceder como Cliente
                     </button>
-                    <button onclick="switchScreen('screen-admin-dashboard')" class="w-full bg-[#090F21]/80 text-zinc-400 border border-borderGray py-3 rounded-xl text-xs hover:bg-slate-900 transition backdrop-blur-sm">
+                    <button onclick="switchScreen('screen-admin-dashboard')" class="w-full bg-[#0d162b] text-sky-300/90 border border-sky-950 py-3 rounded-xl text-xs hover:bg-[#121f3d] transition duration-300">
                         Panel de Ayelén
                     </button>
                 </div>
             </div>
 
-            <!-- PANEL CLIENTE -->
-            <div id="screen-client-home" class="app-screen hidden p-6 space-y-5">
-                <h3 class="text-xl font-bold text-white flex items-center gap-2">
-                    <span class="w-1.5 h-5 bg-gradient-to-b from-sky-400 to-blue-600 rounded-full"></span> Reserva tu hueco
-                </h3>
-
-                <!-- Bloque de reserva con Calendly -->
-                <div class="bg-panelBg/60 backdrop-blur-sm p-4 rounded-xl border border-borderGray space-y-3">
-                    <p class="text-zinc-300 text-xs">Selecciona fecha y realiza el pago de la señal para confirmar tu cita.</p>
-                    <a href="https://calendly.com/lorena7750" target="_blank" class="block w-full bg-gradient-to-r from-sky-400 to-blue-600 text-neutral-950 py-3 rounded-lg font-extrabold hover:brightness-110 transition text-center text-xs shadow-md shadow-sky-500/10">
-                        Reservar Tatuaje
-                    </a>
+            <!-- PANTALLA 2: PANEL CLIENTE (HOME) -->
+            <div id="screen-client-home" class="app-screen hidden p-6 space-y-6 flex-1 flex flex-col">
+                <!-- Barra superior de la pantalla con botón volver -->
+                <div class="flex items-center gap-4">
+                    <button onclick="switchScreen('screen-welcome')" class="w-9 h-9 rounded-lg bg-[#0c162f]/80 border border-sky-900/30 text-sky-400 hover:text-white flex items-center justify-center transition">
+                        <i class="fa-solid fa-arrow-left text-sm"></i>
+                    </button>
+                    <h3 class="text-xl font-bold text-white">Reserva tu hueco</h3>
+                </div>
+                
+                <!-- Tarjeta de reserva directa INTEGRADA en celeste/azul brillante -->
+                <div class="bg-gradient-to-b from-[#09132d] to-[#060c1d] p-5 rounded-2xl border border-sky-950/70 space-y-4 shadow-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center text-sky-400">
+                            <i class="fa-solid fa-calendar-days text-sm"></i>
+                        </div>
+                        <h4 class="font-bold text-white text-sm">Reserva tu Cita</h4>
+                    </div>
+                    <p class="text-zinc-300 text-xs leading-relaxed">Selecciona fecha y hora para reservar tu hueco en mi agenda de forma directa y personalizada.</p>
+                    <button onclick="openBookingCalendar()" class="w-full bg-gradient-to-r from-sky-400 to-blue-500 text-white py-3.5 rounded-xl font-bold hover:from-sky-500 hover:to-blue-600 transition text-center text-sm shadow-md shadow-sky-500/20">
+                        Reservar Cita
+                    </button>
                 </div>
 
-                <!-- Bloque de Contacto Directo -->
-                <div class="bg-panelBg/60 backdrop-blur-sm p-4 rounded-xl border border-borderGray space-y-3">
-                    <p class="text-zinc-300 text-xs">¿Tienes dudas con tu diseño? Contacta directamente:</p>
-                    <div class="grid grid-cols-2 gap-3">
-                        <button onclick="switchScreen('screen-contact-menu')" class="bg-slate-950/60 border border-borderGray py-2.5 rounded-lg text-xs font-bold hover:border-sky-400 transition flex items-center justify-center gap-2 w-full text-zinc-200">
-                            <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i> WhatsApp
-                        </button>
-                        <a href="https://www.instagram.com/marotoart_tattoo/" target="_blank" class="bg-slate-950/60 border border-borderGray py-2.5 rounded-lg text-xs font-bold hover:border-pink-500 transition flex items-center justify-center gap-2 text-zinc-200">
-                            <i class="fa-brands fa-instagram text-pink-500 text-sm"></i> Instagram
-                        </a>
+                <!-- Tarjeta de Consultas Personalizadas con WhatsApp Verde Tradicional -->
+                <div class="bg-gradient-to-b from-[#09132d] to-[#060c1d] p-5 rounded-2xl border border-sky-950/70 space-y-4 shadow-xl mt-auto">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center text-green-400">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                        </div>
+                        <h4 class="font-bold text-white text-sm">¿Tienes dudas o ideas?</h4>
                     </div>
+                    <p class="text-zinc-300 text-xs leading-relaxed">Escríbeme por aquí si necesitas consultarme presupuesto, tamaño o ideas sobre tu próximo tatuaje.</p>
+                    
+                    <button onclick="switchScreen('screen-contact-menu')" class="w-full bg-[#081c12] border border-green-950 text-green-400 py-3 rounded-xl text-xs font-semibold hover:border-green-400 hover:bg-[#0c2a1b] transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-comments text-xs"></i> Hacer Consulta Directa
+                    </button>
+                </div>
+
+                <!-- Redes sociales secundarias -->
+                <div class="pt-2">
+                    <a href="https://www.instagram.com/marotoart_tattoo/" target="_blank" class="w-full bg-zinc-950/40 border border-sky-950/40 py-2.5 rounded-xl text-[11px] font-semibold text-zinc-400 hover:text-white transition flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-instagram text-pink-500 text-sm"></i> Seguir en Instagram @marotoart_tattoo
+                    </a>
                 </div>
             </div>
 
-            <!-- PANTALLA: MENÚ INTERACTIVO DE CONSULTAS -->
+            <!-- PANTALLA 3: MENÚ INTERACTIVO DE CONSULTAS -->
             <div id="screen-contact-menu" class="app-screen hidden p-6 space-y-5">
-                <div class="flex items-center gap-3">
-                    <button onclick="switchScreen('screen-client-home')" class="text-zinc-400 hover:text-white transition"><i class="fa-solid fa-arrow-left text-lg"></i></button>
+                <div class="flex items-center gap-4">
+                    <button onclick="switchScreen('screen-client-home')" class="w-9 h-9 rounded-lg bg-[#0c162f]/80 border border-sky-900/30 text-sky-400 hover:text-white flex items-center justify-center transition">
+                        <i class="fa-solid fa-arrow-left text-sm"></i>
+                    </button>
                     <h3 class="text-xl font-bold text-white">Consultas WhatsApp</h3>
                 </div>
                 
-                <p class="text-xs text-zinc-300 font-medium">Hola Ayelén, necesito preguntarte:</p>
+                <p class="text-xs text-zinc-300 font-semibold pl-1">Hola Ayelén, necesito preguntarte:</p>
                 
                 <div class="space-y-2.5" id="contact-options-list">
-                    <button onclick="selectContactOption('Si puedes realizarme este tatuaje en concreto...')" class="w-full text-left bg-panelBg/80 border border-borderGray p-3.5 rounded-xl text-xs font-semibold hover:border-sky-400 hover:bg-slate-950 transition flex justify-between items-center group">
-                        <span class="pr-2 text-zinc-200">¿Si puedes realizarme este tatuaje en concreto?</span>
-                        <i class="fa-solid fa-chevron-right text-zinc-500 group-hover:text-sky-400 transition"></i>
+                    <button onclick="selectContactOption('Me gustaría tatuarme este diseño en concreto')" class="w-full text-left bg-[#070f24]/80 border border-sky-950/70 p-3.5 rounded-xl text-xs font-semibold hover:border-sky-400 hover:bg-[#0f1d44] transition flex justify-between items-center group">
+                        <span class="pr-2 text-zinc-200">Me gustaría tatuarme este diseño en concreto</span>
+                        <i class="fa-solid fa-chevron-right text-sky-500 group-hover:translate-x-1 transition duration-200"></i>
                     </button>
-                    <button onclick="selectContactOption('Puedes hacerme este tatuaje de este tamaño...')" class="w-full text-left bg-panelBg/80 border border-borderGray p-3.5 rounded-xl text-xs font-semibold hover:border-sky-400 hover:bg-slate-950 transition flex justify-between items-center group">
-                        <span class="pr-2 text-zinc-200">¿Puedes hacerme este tatuaje de este tamaño?</span>
-                        <i class="fa-solid fa-chevron-right text-zinc-500 group-hover:text-sky-400 transition"></i>
+                    <button onclick="selectContactOption('Me gustaría tatuarme y que juntos realicemos un diseño desde cero y necesito ideas')" class="w-full text-left bg-[#070f24]/80 border border-sky-950/70 p-3.5 rounded-xl text-xs font-semibold hover:border-sky-400 hover:bg-[#0f1d44] transition flex justify-between items-center group">
+                        <span class="pr-2 text-zinc-200">Me gustaría tatuarme y diseñar algo juntos desde cero</span>
+                        <i class="fa-solid fa-chevron-right text-sky-500 group-hover:translate-x-1 transition duration-200"></i>
                     </button>
-                    <button onclick="selectContactOption('Puedes hacerme este tatuaje en...')" class="w-full text-left bg-panelBg/80 border border-borderGray p-3.5 rounded-xl text-xs font-semibold hover:border-sky-400 hover:bg-slate-950 transition flex justify-between items-center group">
-                        <span class="pr-2 text-zinc-200">¿Puedes hacerme este tatuaje en...? (zona de cuerpo)</span>
-                        <i class="fa-solid fa-chevron-right text-zinc-500 group-hover:text-sky-400 transition"></i>
+                    <button onclick="selectContactOption('Mis días disponibles son…')" class="w-full text-left bg-[#070f24]/80 border border-sky-950/70 p-3.5 rounded-xl text-xs font-semibold hover:border-sky-400 hover:bg-[#0f1d44] transition flex justify-between items-center group">
+                        <span class="pr-2 text-zinc-200">Mis días disponibles son…</span>
+                        <i class="fa-solid fa-chevron-right text-sky-500 group-hover:translate-x-1 transition duration-200"></i>
                     </button>
-                    <button onclick="selectContactOption('Cuanto me cobras por este tatuaje...')" class="w-full text-left bg-panelBg/80 border border-borderGray p-3.5 rounded-xl text-xs font-semibold hover:border-sky-400 hover:bg-slate-950 transition flex justify-between items-center group">
-                        <span class="pr-2 text-zinc-200">¿Cuánto me cobras por este tatuaje?</span>
-                        <i class="fa-solid fa-chevron-right text-zinc-500 group-hover:text-sky-400 transition"></i>
+                    <button onclick="selectContactOption('¿Cuál sería el presupuesto?')" class="w-full text-left bg-[#070f24]/80 border border-sky-950/70 p-3.5 rounded-xl text-xs font-semibold hover:border-sky-400 hover:bg-[#0f1d44] transition flex justify-between items-center group">
+                        <span class="pr-2 text-zinc-200">¿Cuál sería el presupuesto?</span>
+                        <i class="fa-solid fa-chevron-right text-sky-500 group-hover:translate-x-1 transition duration-200"></i>
+                    </button>
+                    <button onclick="selectContactOption('¿Cuánto tiempo aproximado durará la sesión?')" class="w-full text-left bg-[#070f24]/80 border border-sky-950/70 p-3.5 rounded-xl text-xs font-semibold hover:border-sky-400 hover:bg-[#0f1d44] transition flex justify-between items-center group">
+                        <span class="pr-2 text-zinc-200">¿Cuánto tiempo aproximado durará la sesión?</span>
+                        <i class="fa-solid fa-chevron-right text-sky-500 group-hover:translate-x-1 transition duration-200"></i>
                     </button>
                 </div>
 
-                <!-- PASO 2: CONFIRMACIÓN Y ENVÍO -->
-                <div id="contact-step-2" class="hidden bg-slate-950 p-4 rounded-xl border border-borderGray space-y-4 transition-all duration-300">
+                <!-- PASO 2: CONFIRMACIÓN DE CONSULTA -->
+                <div id="contact-step-2" class="hidden bg-[#050c1f] p-4 rounded-xl border border-sky-900/50 space-y-4 transition-all duration-300">
                     <div class="space-y-1">
-                        <p class="text-[10px] uppercase tracking-wider text-sky-400 font-bold">Has elegido la consulta:</p>
+                        <p class="text-[10px] uppercase tracking-wider text-sky-400 font-bold">Has seleccionado la consulta:</p>
                         <p id="selected-option-label" class="text-xs italic text-zinc-200 font-medium"></p>
                     </div>
                     
-                    <div class="bg-panelBg/80 p-3 rounded-lg border border-borderGray text-xs text-zinc-400 space-y-2">
-                        <p class="flex gap-2"><span class="text-emerald-400 font-bold">✓</span> Se abrirá tu chat con Ayelén.</p>
-                        <p class="flex gap-2"><span class="text-emerald-400 font-bold">✓</span> <strong>¡Recuerda!</strong> En WhatsApp, envíale la foto del tatuaje que deseas.</p>
+                    <div class="bg-zinc-950/60 p-3 rounded-lg border border-sky-950/80 text-xs text-zinc-400 space-y-2">
+                        <p class="flex gap-2"><span class="text-emerald-500 font-bold">✓</span> Al presionar el botón verde, se abrirá tu WhatsApp con la plantilla lista.</p>
+                        <p class="flex gap-2"><span class="text-emerald-500 font-bold">✓</span> <strong>¡Consejo!</strong> Recuerda adjuntar una foto de referencia de la idea si la tienes.</p>
                     </div>
 
-                    <a id="whatsapp-final-send-btn" href="#" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/20">
-                        <i class="fa-brands fa-whatsapp text-sm"></i> Enviar a WhatsApp con Foto
+                    <a id="whatsapp-final-send-btn" href="#" target="_blank" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-lg shadow-green-950/30">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> Enviar a Ayelén por WhatsApp
                     </a>
                 </div>
             </div>
 
-            <!-- PANEL AYELÉN (ADMIN) -->
-            <div id="screen-admin-dashboard" class="app-screen hidden p-6 space-y-5">
-                <h3 class="text-xl font-bold text-white flex items-center gap-2">
-                    <span class="w-1.5 h-5 bg-gradient-to-b from-sky-400 to-blue-600 rounded-full"></span> Panel de Control
-                </h3>
-                
-                <div class="space-y-4">
-                    <a href="https://calendly.com/event_types/user/me" target="_blank" class="bg-panelBg/60 backdrop-blur-sm p-5 rounded-xl border border-borderGray text-center hover:border-sky-400 transition block shadow-lg shadow-sky-950/20">
-                        <i class="fa-solid fa-calendar-check text-sky-400 mb-3 text-2xl"></i>
-                        <p class="text-sm font-semibold text-zinc-100">Ver Mis Citas (Calendly)</p>
-                    </a>
+            <!-- PANTALLA 5: CALENDARIO DE RESERVAS INTERACTIVO -->
+            <div id="screen-booking-calendar" class="app-screen hidden p-6 space-y-4 flex-1 flex flex-col">
+                <div class="flex items-center gap-4">
+                    <button onclick="switchScreen('screen-client-home')" class="w-9 h-9 rounded-lg bg-[#0c162f]/80 border border-sky-900/30 text-sky-400 hover:text-white flex items-center justify-center transition">
+                        <i class="fa-solid fa-arrow-left text-sm"></i>
+                    </button>
+                    <h3 class="text-xl font-bold text-white">Elige tu fecha</h3>
                 </div>
 
-                <div class="bg-slate-950/60 p-4 rounded-xl border border-borderGray">
-                    <p class="text-xs text-zinc-400 leading-relaxed">Controla la agenda y revisa todas tus citas confirmadas directamente conectándote con tu portal de administración de Calendly.</p>
+                <!-- Selector de Mes -->
+                <div class="flex justify-between items-center bg-[#070f24] border border-sky-950 p-2.5 rounded-xl">
+                    <button onclick="changeMonth(-1)" class="text-sky-400 hover:text-white transition w-8 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-chevron-left text-xs"></i>
+                    </button>
+                    <span id="calendar-month-year" class="text-xs font-bold text-white capitalize"></span>
+                    <button onclick="changeMonth(1)" class="text-sky-400 hover:text-white transition w-8 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Cabecera de Días de la Semana -->
+                <div class="grid grid-cols-7 text-center text-[10px] font-bold text-sky-400/60 uppercase">
+                    <span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sá</span><span>Do</span>
+                </div>
+
+                <!-- Cuadrícula de Días -->
+                <div id="calendar-days-grid" class="grid grid-cols-7 gap-1 text-center">
+                    <!-- Rellenado dinámicamente por JavaScript -->
+                </div>
+
+                <!-- Bloque de Horarios Disponibles -->
+                <div id="booking-hours-container" class="hidden space-y-3 bg-[#070f24]/50 p-4 rounded-xl border border-sky-950/50">
+                    <p class="text-[11px] text-sky-300 font-semibold flex items-center gap-2">
+                        <i class="fa-solid fa-clock"></i> Huecos para el <span id="selected-date-label" class="text-white underline font-bold"></span>:
+                    </p>
+                    <div id="hours-slots-grid" class="grid grid-cols-3 gap-2">
+                        <!-- Rellenado dinámicamente por JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Formulario de reserva -->
+                <div id="booking-form-container" class="hidden space-y-3 bg-[#070f24]/50 p-4 rounded-xl border border-sky-950/50">
+                    <div class="space-y-1.5">
+                        <label class="text-[10px] text-zinc-400 uppercase tracking-wider font-bold">Tu Nombre *</label>
+                        <input type="text" id="booking-client-name" class="w-full bg-[#030611] border border-sky-950 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-sky-400 transition" placeholder="Introduce tu nombre">
+                    </div>
+                    <div class="space-y-1.5">
+                        <label class="text-[10px] text-zinc-400 uppercase tracking-wider font-bold">Idea o zona del tatuaje</label>
+                        <textarea id="booking-tattoo-idea" rows="2" class="w-full bg-[#030611] border border-sky-950 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-sky-400 resize-none transition" placeholder="Ej: Mariposa lineal en el antebrazo..."></textarea>
+                    </div>
+
+                    <!-- Mensaje de aviso nativo (Reemplaza al feo alert() del navegador) -->
+                    <div id="validation-warning" class="hidden text-xs bg-red-950/40 text-red-400 p-2.5 rounded-lg border border-red-900/50 text-center">
+                        ⚠️ Por favor, introduce tu nombre para poder continuar.
+                    </div>
+
+                    <button onclick="submitBookingRequest()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-lg shadow-green-950/30">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> Confirmar y Enviar por WhatsApp
+                    </button>
+                </div>
+            </div>
+
+            <!-- PANTALLA 4: PANEL PRIVADO DE AYELÉN (ADMIN) -->
+            <div id="screen-admin-dashboard" class="app-screen hidden p-6 space-y-6 flex-1 flex flex-col">
+                <div class="flex items-center gap-4">
+                    <button onclick="switchScreen('screen-welcome')" class="w-9 h-9 rounded-lg bg-[#0c162f]/80 border border-sky-900/30 text-sky-400 hover:text-white flex items-center justify-center transition">
+                        <i class="fa-solid fa-arrow-left text-sm"></i>
+                    </button>
+                    <h3 class="text-xl font-bold text-white">Panel de Control</h3>
+                </div>
+                
+                <div class="bg-gradient-to-b from-[#09132d] to-[#060c1d] p-5 rounded-2xl border border-sky-950/70 space-y-4 shadow-xl">
+                    <div class="flex items-center gap-3 text-sky-400">
+                        <i class="fa-solid fa-calendar-check text-lg"></i>
+                        <h4 class="font-bold text-white text-sm">Horarios de Ayelén</h4>
+                    </div>
+                    <p class="text-zinc-300 text-xs leading-relaxed">Tus horarios actuales configurados en el sistema inteligente de reservas de tu app:</p>
+                    
+                    <div class="space-y-2 text-xs bg-black/40 p-3 rounded-lg border border-sky-950">
+                        <p class="flex justify-between"><span class="text-sky-300 font-bold">Lun, Jue y Sáb:</span> <span class="text-white">11:00 - 15:00</span></p>
+                        <p class="flex justify-between"><span class="text-sky-300 font-bold">Mar, Mié y Vie:</span> <span class="text-white">14:30 - 17:30</span></p>
+                        <p class="flex justify-between"><span class="text-zinc-500">Domingos:</span> <span class="text-red-400 font-bold">Cerrado</span></p>
+                    </div>
+                </div>
+
+                <div class="bg-[#050c1f] p-4 rounded-xl border border-sky-950/50 mt-auto">
+                    <p class="text-[10px] text-zinc-400 leading-relaxed text-center">Este panel es de uso exclusivo para ti, Ayelén. Los cambios de horarios se aplican de manera automática directamente en el código de tu app.</p>
                 </div>
             </div>
 
         </div>
 
-        <!-- MENÚ DE NAVEGACIÓN INFERIOR (2 BOTONES SIMÉTRICOS) -->
-        <div class="bg-[#050b18] border-t border-borderGray py-4 flex justify-around items-center z-40">
-            <button onclick="switchScreen('screen-client-home')" class="text-zinc-500 hover:text-sky-400 transition flex flex-col items-center gap-1">
-                <i class="fa-solid fa-calendar-day text-xl"></i>
-                <span class="text-[9px] uppercase tracking-wider font-semibold">Reservas</span>
+        <!-- NAVEGACIÓN INFERIOR (COMPLETAMENTE ADAPTADA CON DOS ACCESOS) -->
+        <div class="bg-darkBg/95 border-t border-sky-950/60 py-3 flex justify-around items-center z-40">
+            <button onclick="switchScreen('screen-client-home')" class="text-sky-500 hover:text-white flex flex-col items-center gap-1 transition">
+                <i class="fa-solid :fa-calendar-alt text-lg"></i>
+                <i class="fa-solid fa-calendar-alt text-lg"></i>
+                <span class="text-[9px] font-semibold uppercase tracking-wider">Reservas</span>
             </button>
-            <button onclick="switchScreen('screen-admin-dashboard')" class="text-zinc-500 hover:text-sky-400 transition flex flex-col items-center gap-1">
-                <i class="fa-solid fa-sliders text-xl"></i>
-                <span class="text-[9px] uppercase tracking-wider font-semibold">Panel Admin</span>
+            <button onclick="switchScreen('screen-admin-dashboard')" class="text-zinc-500 hover:text-sky-400 flex flex-col items-center gap-1 transition">
+                <i class="fa-solid fa-user-gear text-lg"></i>
+                <span class="text-[9px] font-semibold uppercase tracking-wider">Ajustes</span>
             </button>
         </div>
     </div>
 
-    <!-- SCRIPT DE COMPORTAMIENTO -->
+    <!-- SCRIPTS DE NAVEGACIÓN Y FUNCIONAMIENTO INTERACTIVO -->
     <script>
+        // Registrar Service Worker para habilitar la instalación perfecta del logo
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js').then(function(registration) {
+                    console.log('ServiceWorker registrado con éxito: ', registration.scope);
+                }, function(err) {
+                    console.log('Fallo al registrar ServiceWorker: ', err);
+                });
+            });
+        }
+
+        // Cambiar entre pantallas de forma fluida
         function switchScreen(id) {
             document.querySelectorAll('.app-screen').forEach(s => s.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
             
+            // Si salmos de la consulta de WhatsApp, ocultamos el paso de confirmación
             if(id !== 'screen-contact-menu') {
                 const step2 = document.getElementById('contact-step-2');
                 if(step2) step2.classList.add('hidden');
             }
         }
 
+        // Construir plantilla dinámica para el WhatsApp de consultas generales
         function selectContactOption(optionText) {
-            document.getElementById('selected-option-label').innerText = optionText;
-            const message = `Hola Ayelén, necesito preguntarte:\n\n*${optionText}*\n\n(Aquí te adjunto la foto del tatuaje 👇)`;
+            document.getElementById('selected-option-label').innerText = `"${optionText}"`;
+            
+            const message = `Hola Ayelén, necesito preguntarte:\n\n*${optionText}*\n\n(Aquí te adjunto la foto de referencia si es necesario 👇)`;
             const encodedMessage = encodeURIComponent(message);
+            
             const finalUrl = `https://wa.me/34622123581?text=${encodedMessage}`;
             const sendBtn = document.getElementById('whatsapp-final-send-btn');
             sendBtn.href = finalUrl;
@@ -227,6 +334,193 @@
             setTimeout(() => {
                 step2Box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }, 150);
+        }
+
+        // --- SISTEMA DE RESERVAS NATIVO ---
+        let currentYear = new Date().getFullYear();
+        let currentMonth = new Date().getMonth(); // 0-11
+        let selectedDate = null;
+        let selectedTime = null;
+
+        const months = [
+            "enero", "febrero", "marzo", "abril", "mayo", "junio",
+            "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+        ];
+
+        function openBookingCalendar() {
+            switchScreen('screen-booking-calendar');
+            // Reset de selecciones previas
+            selectedDate = null;
+            selectedTime = null;
+            document.getElementById('booking-hours-container').classList.add('hidden');
+            document.getElementById('booking-form-container').classList.add('hidden');
+            document.getElementById('validation-warning').classList.add('hidden');
+            
+            renderCalendar();
+        }
+
+        function changeMonth(direction) {
+            currentMonth += direction;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            } else if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar();
+            // Cerrar horarios y formulario si se cambia de mes
+            document.getElementById('booking-hours-container').classList.add('hidden');
+            document.getElementById('booking-form-container').classList.add('hidden');
+        }
+
+        function renderCalendar() {
+            const monthYearLabel = document.getElementById('calendar-month-year');
+            monthYearLabel.innerText = `${months[currentMonth]} ${currentYear}`;
+
+            const grid = document.getElementById('calendar-days-grid');
+            grid.innerHTML = "";
+
+            // Primer día de la semana del mes (ajustado para que empiece en lunes)
+            let firstDayIndex = new Date(currentYear, currentMonth, 1).getDay();
+            firstDayIndex = firstDayIndex === 0 ? 6 : firstDayIndex - 1; // Ajuste Lunes-Domingo
+
+            // Número total de días en el mes
+            const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+            // Rellenar huecos vacíos antes del primer día del mes
+            for (let i = 0; i < firstDayIndex; i++) {
+                const emptyCell = document.createElement('div');
+                grid.appendChild(emptyCell);
+            }
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            // Generar botones para cada día
+            for (let day = 1; day <= totalDays; day++) {
+                const dayButton = document.createElement('button');
+                dayButton.innerText = day;
+                dayButton.className = "w-9 h-9 mx-auto rounded-lg text-xs font-semibold flex items-center justify-center transition";
+
+                const cellDate = new Date(currentYear, currentMonth, day);
+                const dayOfWeek = cellDate.getDay(); // 0: Dom, 1: Lun, 2: Mar, 3: Mié, 4: Jue, 5: Vie, 6: Sáb
+
+                // Validar si el día ya pasó o si es Domingo (Cerrado)
+                if (cellDate < today || dayOfWeek === 0) {
+                    dayButton.className += " text-zinc-600 cursor-not-allowed bg-zinc-950/20";
+                    dayButton.disabled = true;
+                } else {
+                    // Días laborables disponibles
+                    dayButton.className += " bg-[#070f24]/60 border border-sky-950 text-zinc-100 hover:border-sky-400 hover:bg-[#0c1a40]";
+                    dayButton.onclick = () => selectDay(day, dayOfWeek, dayButton);
+                }
+
+                grid.appendChild(dayButton);
+            }
+        }
+
+        function selectDay(day, dayOfWeek, buttonElement) {
+            // Desmarcar botón anterior
+            document.querySelectorAll('#calendar-days-grid button').forEach(btn => {
+                if(!btn.disabled) {
+                    btn.classList.remove('bg-sky-500', 'text-black', 'border-sky-400');
+                    btn.classList.add('bg-[#070f24]/60', 'text-zinc-100', 'border-sky-950');
+                }
+            });
+
+            // Marcar botón seleccionado
+            buttonElement.classList.remove('bg-[#070f24]/60', 'text-zinc-100', 'border-sky-950');
+            buttonElement.classList.add('bg-sky-500', 'text-black', 'border-sky-400');
+
+            selectedDate = new Date(currentYear, currentMonth, day);
+            selectedTime = null;
+
+            // Formatear cabecera de fecha elegida
+            const dayNames = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+            document.getElementById('selected-date-label').innerText = `${dayNames[dayOfWeek]} ${day} de ${months[currentMonth]}`;
+
+            // Calcular y renderizar slots según los nuevos horarios de Ayelén
+            const hoursGrid = document.getElementById('hours-slots-grid');
+            hoursGrid.innerHTML = "";
+
+            let slots = [];
+            
+            if (dayOfWeek === 1 || dayOfWeek === 4 || dayOfWeek === 6) {
+                // Lunes, Jueves y Sábados: 11:00 a 15:00
+                slots = ["11:00", "12:00", "13:00", "14:00"];
+            } else if (dayOfWeek === 2 || dayOfWeek === 3 || dayOfWeek === 5) {
+                // Martes, Miércoles y Viernes: 14:30 a 17:30
+                slots = ["14:30", "15:30", "16:30"];
+            }
+
+            slots.forEach(time => {
+                const timeButton = document.createElement('button');
+                timeButton.innerText = `${time} hs`;
+                timeButton.className = "bg-[#030611] border border-sky-950 text-sky-300 py-2.5 rounded-lg text-xs font-semibold hover:border-sky-400 transition";
+                timeButton.onclick = () => selectTimeSlot(time, timeButton);
+                hoursGrid.appendChild(timeButton);
+            });
+
+            document.getElementById('booking-hours-container').classList.remove('hidden');
+            document.getElementById('booking-form-container').classList.add('hidden'); // Ocultar hasta elegir hora
+            document.getElementById('validation-warning').classList.add('hidden');
+        }
+
+        function selectTimeSlot(time, buttonElement) {
+            // Desmarcar slots anteriores
+            document.querySelectorAll('#hours-slots-grid button').forEach(btn => {
+                btn.classList.remove('bg-gradient-to-r', 'from-sky-400', 'to-blue-500', 'text-white', 'border-transparent');
+                btn.classList.add('bg-[#030611]', 'border-sky-950', 'text-sky-300');
+            });
+
+            // Marcar slot seleccionado
+            buttonElement.classList.remove('bg-[#030611]', 'border-sky-950', 'text-sky-300');
+            buttonElement.classList.add('bg-gradient-to-r', 'from-sky-400', 'to-blue-500', 'text-white', 'border-transparent');
+
+            selectedTime = time;
+            document.getElementById('booking-form-container').classList.remove('hidden');
+            document.getElementById('validation-warning').classList.add('hidden');
+
+            // Scroll automático para facilitar la lectura
+            setTimeout(() => {
+                document.getElementById('booking-form-container').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+
+        function submitBookingRequest() {
+            const clientName = document.getElementById('booking-client-name').value.trim();
+            const tattooIdea = document.getElementById('booking-tattoo-idea').value.trim();
+            const warningBox = document.getElementById('validation-warning');
+
+            if (!clientName) {
+                // Hacer visible el elegante mensaje de validación nativo
+                warningBox.classList.remove('hidden');
+                warningBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                return;
+            } else {
+                warningBox.classList.add('hidden');
+            }
+
+            const formattedDate = selectedDate.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+            
+            // Construir un precioso mensaje estructurado para recibir en el WhatsApp de Ayelén
+            let message = `✨ *SOLICITUD DE CITA - MAROTOART* ✨\n\n`;
+            message += `👤 *Cliente:* ${clientName}\n`;
+            message += `📅 *Fecha:* ${formattedDate}\n`;
+            message += `⏰ *Hora:* ${selectedTime} hs\n`;
+            
+            if (tattooIdea) {
+                message += `💡 *Idea:* ${tattooIdea}\n`;
+            }
+            
+            message += `\n_¿Tienes disponible este hueco, Ayelén? ¡Gracias!_`;
+
+            const encodedMessage = encodeURIComponent(message);
+            const finalUrl = `https://wa.me/34622123581?text=${encodedMessage}`;
+
+            // Abrir WhatsApp de forma elegante
+            window.open(finalUrl, '_blank');
         }
     </script>
 </body>
